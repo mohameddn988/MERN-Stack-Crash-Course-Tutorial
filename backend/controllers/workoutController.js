@@ -8,7 +8,7 @@ const getAllWorkouts = async (req, res) => {
         res.status(200).json(workouts)
     }
     catch (err) {
-        res.status(500).json({message: err.message})
+        res.status(500).json({error: err.message})
     }
 }
 
@@ -16,19 +16,19 @@ const getAllWorkouts = async (req, res) => {
 const getSingleWorkout = async (req, res) => {
     const { id } = req.params
     if(!mongoose.Types.ObjectId.isValid(id)){
-        return res.status(400).json({message: 'Invalid ID'})
+        return res.status(400).json({error: 'Invalid ID'})
     }
 
     const workout = await Workout.findById(id)
 
     if (!workout) {
-        return res.status(404).json({message: 'Workout not found'})
+        return res.status(404).json({error: 'Workout not found'})
     }
     try {
         res.status(200).json(workout)
     }
     catch (err) {
-        res.status(500).json({message: err.message})
+        res.status(500).json({error: err.message})
     }  
 }
 
@@ -40,7 +40,7 @@ const createWorkout = async (req, res) => {
         res.status(200).json(workout)
     }
     catch (err) {
-        res.status(400).json({message: err.message})
+        res.status(400).json({error: err.message})
     }
 }
 
@@ -49,19 +49,19 @@ const updateWorkout = async (req, res) => {
     const { id } = req.params
 
     if(!mongoose.Types.ObjectId.isValid(id)){
-        return res.status(400).json({message: 'Invalid ID'})
+        return res.status(400).json({error: 'Invalid ID'})
     }
     
     const updatedWorkout = await Workout.findByIdAndUpdate({_id: id}, {...req.body})
      
     if (!updatedWorkout) {
-        return res.status(404).json({message: 'Workout not found'})
+        return res.status(404).json({error: 'Workout not found'})
     }
     try {
         res.status(200).json(updatedWorkout)
     }
     catch (err) {
-        res.status(500).json({message: err.message})
+        res.status(500).json({error: err.message})
     }
 }
 
@@ -69,19 +69,19 @@ const updateWorkout = async (req, res) => {
 const deleteWorkout = async (req, res) => {
     const { id } = req.params
     if(!mongoose.Types.ObjectId.isValid(id)){
-        return res.status(400).json({message: 'Invalid ID'})
+        return res.status(400).json({error: 'Invalid ID'})
     }
     
     const workout = await Workout.findByIdAndDelete({_id: id})
     
     if (!workout) {
-        return res.status(404).json({message: 'Workout not found'})
+        return res.status(404).json({error: 'Workout not found'})
     }
     try {
-        res.status(200).json({message: 'Workout deleted successfully'})
+        res.status(200).json({error: 'Workout deleted successfully'})
     }
     catch (err) {
-        res.status(500).json({message: err.message})
+        res.status(500).json({error: err.message})
     }
 }
 
